@@ -129,7 +129,7 @@ pub enum EventCategory {
 
 #[derive(Clone, Copy, Debug, Deserialize_repr, Eq, PartialEq, Serialize_repr)]
 #[repr(u8)]
-pub enum TiKind {
+pub enum LabelDbKind {
     Ip = 0,
     Url = 1,
     Token = 2,
@@ -151,7 +151,7 @@ pub struct UserAgent {
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct TiRule {
+pub struct LabelDbRule {
     pub rule_id: u32,
     pub category: Option<EventCategory>,
     pub name: String,
@@ -164,14 +164,14 @@ pub struct TiRule {
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct Tidb {
+pub struct LabelDb {
     pub id: u32,
     pub name: String,
     pub description: Option<String>,
-    pub kind: TiKind,
+    pub kind: LabelDbKind,
     pub category: Option<EventCategory>,
     pub version: String,
-    pub patterns: Vec<TiRule>,
+    pub patterns: Vec<LabelDbRule>,
 }
 
 #[derive(Clone, Copy, Debug, Deserialize, Serialize)]

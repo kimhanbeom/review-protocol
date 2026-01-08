@@ -11,8 +11,8 @@ use oinq::request::parse_args;
 
 use super::RequestCode;
 use crate::types::{
-    ColumnStatisticsUpdate, DataSource, DataSourceKey, EventMessage, HostNetworkGroup, OutlierInfo,
-    Tidb, TimeSeriesUpdate, UpdateClusterRequest, UserAgent,
+    ColumnStatisticsUpdate, DataSource, DataSourceKey, EventMessage, HostNetworkGroup, LabelDb,
+    OutlierInfo, TimeSeriesUpdate, UpdateClusterRequest, UserAgent,
 };
 
 /// A request handler that can handle a request to the server.
@@ -65,10 +65,10 @@ pub trait Handler {
         Err("not supported".to_string())
     }
 
-    async fn get_tidb_patterns(
+    async fn get_labeldb_patterns(
         &self,
         _db_names: &[(&str, &str)],
-    ) -> Result<Vec<(String, Option<Tidb>)>, String> {
+    ) -> Result<Vec<(String, Option<LabelDb>)>, String> {
         Err("not supported".to_string())
     }
 
@@ -225,9 +225,9 @@ where
                 let result = handler.get_model_names().await;
                 oinq::request::send_response(send, &mut buf, result).await?;
             }
-            RequestCode::GetTidbPatterns => {
+            RequestCode::GetLabelDbPatterns => {
                 let db_names = parse_args::<Vec<(&str, &str)>>(body)?;
-                let result = handler.get_tidb_patterns(&db_names).await;
+                let result = handler.get_labeldb_patterns(&db_names).await;
                 oinq::request::send_response(send, &mut buf, result).await?;
             }
             RequestCode::GetTorExitNodeList => {

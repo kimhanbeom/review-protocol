@@ -31,7 +31,7 @@ use crate::types::EventMessage;
 #[cfg(feature = "server")]
 use crate::{
     AgentInfo, HandshakeError, client, handle_handshake_recv_io_error,
-    handle_handshake_send_io_error, types::Tidb,
+    handle_handshake_send_io_error, types::LabelDb,
 };
 
 /// Trait for handling incoming event messages from unidirectional streams
@@ -109,7 +109,7 @@ pub(crate) enum RequestCode {
     UpdateOutliers = 12,
     InsertEventLabels = 13,
     GetDataSourceList = 14,
-    GetTidbPatterns = 15,
+    GetLabelDbPatterns = 15,
     InsertDataSource = 20,
     RenewCertificate = 23,
     GetTrustedDomainList = 24,
@@ -427,15 +427,15 @@ pub async fn handshake(
 }
 
 #[cfg(feature = "server")]
-/// Sends patterns from a threat-intelligence database.
+/// Sends patterns from a label database.
 ///
 /// # Errors
 ///
 /// Returns an error if serialization failed or communication with the client failed.
 #[deprecated(since = "0.8.1", note = "`handle` sends the response")]
-pub async fn respond_with_tidb_patterns(
+pub async fn respond_with_labeldb_patterns(
     send: &mut quinn::SendStream,
-    patterns: &[(String, Option<Tidb>)],
+    patterns: &[(String, Option<LabelDb>)],
 ) -> anyhow::Result<()> {
     use anyhow::Context;
 

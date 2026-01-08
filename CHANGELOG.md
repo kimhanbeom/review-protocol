@@ -5,6 +5,13 @@ file is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and
 this project adheres to [Semantic
 Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- Renamed `Tidb` references to `LabelDb` (including request codes/handler-client
+  methods) and `TiKind`/`TiRule` to `LabelDbKind`/`LabelDbRule`(Breaking Change)
+
 ## [0.16.0] - 2025-12-22
 
 ### Changed
@@ -244,7 +251,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - `server::send_trusted_domain_list` is deprecated. The server should now call
   `server::Connection::send_trusted_domain_list` to send the list of trusted
   domains to the client.
-- `server::respond_with_tidb_patters` is deprecated. `server::handle` should be
+- `server::respond_with_tidb_patterns` is deprecated. `server::handle` should be
   used to handle incoming requests from the client.
 
 ## [0.8.0] - 2024-10-11
@@ -492,6 +499,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - `client::handshake` implements the application-level handshake process for the
   client after a QUIC connection is established.
 
+[Unreleased]: https://github.com/petabi/review-protocol/compare/0.16.0...main
 [0.16.0]: https://github.com/petabi/review-protocol/compare/0.15.0...0.16.0
 [0.15.0]: https://github.com/petabi/review-protocol/compare/0.14.0...0.15.0
 [0.14.0]: https://github.com/petabi/review-protocol/compare/0.13.0...0.14.0

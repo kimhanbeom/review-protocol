@@ -83,17 +83,17 @@ impl Connection {
         res.map_err(io::Error::other)
     }
 
-    /// Fetches the patterns from the threat-intelligence database.
+    /// Fetches the patterns from the label database.
     ///
     /// # Errors
     ///
     /// Returns an error if the request fails or the response is invalid.
-    pub async fn get_tidb_patterns(
+    pub async fn get_labeldb_patterns(
         &self,
-        tidbs: &[(&str, &str)],
-    ) -> io::Result<Vec<(String, Option<crate::types::Tidb>)>> {
-        let res: Result<Vec<(String, Option<crate::types::Tidb>)>, String> =
-            request(self, server::RequestCode::GetTidbPatterns, tidbs).await?;
+        labeldbs: &[(&str, &str)],
+    ) -> io::Result<Vec<(String, Option<crate::types::LabelDb>)>> {
+        let res: Result<Vec<(String, Option<crate::types::LabelDb>)>, String> =
+            request(self, server::RequestCode::GetLabelDbPatterns, labeldbs).await?;
         res.map_err(io::Error::other)
     }
 
@@ -444,10 +444,10 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn get_tidb_patterns() {
+    async fn get_labeldb_patterns() {
         run_test(|client_conn| async move {
             let db_names = vec![("db1", "1.0.0"), ("db2", "2.0.0")];
-            let client_res = client_conn.get_tidb_patterns(&db_names).await;
+            let client_res = client_conn.get_labeldb_patterns(&db_names).await;
             assert!(client_res.is_ok());
             let received_patterns = client_res.unwrap();
             assert_eq!(received_patterns.len(), db_names.len());

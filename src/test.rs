@@ -13,7 +13,8 @@ use rustls::pki_types::{CertificateDer, PrivatePkcs8KeyDer};
 use tokio::sync::Mutex;
 
 use crate::types::{
-    DataSource, DataSourceKey, DataType, EventCategory, HostNetworkGroup, TiKind, TiRule, Tidb,
+    DataSource, DataSourceKey, DataType, EventCategory, HostNetworkGroup, LabelDb, LabelDbKind,
+    LabelDbRule,
 };
 
 pub(crate) struct Channel {
@@ -245,20 +246,20 @@ impl crate::server::Handler for TestServerHandler {
     }
 
     // Returns `Some` for `db1` with version "1.0.0" only.
-    async fn get_tidb_patterns(
+    async fn get_labeldb_patterns(
         &self,
         db_names: &[(&str, &str)],
-    ) -> Result<Vec<(String, Option<Tidb>)>, String> {
+    ) -> Result<Vec<(String, Option<LabelDb>)>, String> {
         let db = [(
             "db1".to_string(),
-            Tidb {
+            LabelDb {
                 id: 1,
                 name: "name1".to_string(),
                 description: Some("description1".to_string()),
-                kind: TiKind::Token,
+                kind: LabelDbKind::Token,
                 category: Some(EventCategory::Execution),
                 version: "1.0.0".to_string(),
-                patterns: vec![TiRule {
+                patterns: vec![LabelDbRule {
                     rule_id: 9,
                     category: None,
                     name: "rule1".to_string(),
